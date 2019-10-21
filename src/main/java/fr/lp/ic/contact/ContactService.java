@@ -1,6 +1,6 @@
 package fr.lp.ic.contact;
-
 import java.util.List;
+import java.util.Optional;
 
 import fr.lp.ic.contact.dao.ContactDaoImpl;
 import fr.lp.ic.contact.dao.IContactDao;
@@ -15,6 +15,10 @@ import fr.lp.ic.contact.model.Contact;
  *
  */
 public class ContactService {
+	
+	private static final int MIN_NAME_CHARS = 3;
+	private static final int MAX_NAME_CHARS = 40;
+
 
 	// Ne pas bouger
 	private IContactDao contactDao = new ContactDaoImpl();
@@ -49,6 +53,18 @@ public class ContactService {
 	 *                          lève une ContactException
 	 */
 	public void newContact(String name, String phoneNumber, String email) throws ContactException {
+		if(name == null || name.length() < MIN_NAME_CHARS || name.length() > MAX_NAME_CHARS) {
+			throw new IllegalArgumentException("Name should contain between 3 and 40 chars and can't be null");
+		}
+		Optional<Contact> contactFound = contactDao.findByName(name);
+		if(contactFound.isPresent())
+			throw new ContactException();
+		Contact contact = new Contact();
+		contact.setName(name);
+		contact.setPhone(phoneNumber);
+		contact.setEmail(email);
+		contactDao.save(contact);
+
 
 	}
 
@@ -68,6 +84,18 @@ public class ContactService {
 	 */
 	public void updateContact(String name, String newName, String phoneNumber, String email)
 			throws ContactException, ContactNotFoundException {
+		Optional<Contact> contactFound = contactDao.findByName(name);
+		if(!contactFound.isPresent())
+			throw new ContactNotFoundException();
+		
+		if(!newName.equalsIgnoreCase(name) && contactDao.findByName(newName).isPresent()){
+				throw new ContactException();
+		}
+		
+		contactFound.get().setName(newName);
+		contactFound.get().setPhone(phoneNumber);
+		contactFound.get().setEmail(email);
+		contactDao.update(name, contactFound.get());
 
 	}
 
@@ -78,7 +106,11 @@ public class ContactService {
 	 * @throws ContactNotFoundException Si l'utilisateur n'existe pas on lève une
 	 *                                  ContactNotFoundException
 	 */
-	public void deleteContact(String name) throws ContactException {
+	public void deleteContact(String name) throws ContactNotFoundException {
+		Optional<Contact> contactFound = contactDao.findByName(name);
+		if(!contactFound.isPresent())
+			throw new ContactNotFoundException();
+		contactDao.delete(name);
 
 	}
 
