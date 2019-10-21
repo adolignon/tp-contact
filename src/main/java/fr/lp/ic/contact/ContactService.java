@@ -38,7 +38,7 @@ public class ContactService {
 	 * @return nombre de contact
 	 */
 	public int count() {
-		return 0;
+		return listAll().size();
 	}
 
 	/**
