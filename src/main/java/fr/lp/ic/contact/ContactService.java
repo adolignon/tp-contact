@@ -1,4 +1,5 @@
 package fr.lp.ic.contact;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ public class ContactService {
 	 * @return list des contact triés
 	 */
 	public List<String> listAll() {
-		return null;
+		return Collections.emptyList();
 	}
 
 	/**

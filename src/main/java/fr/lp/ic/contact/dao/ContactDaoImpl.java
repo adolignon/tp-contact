@@ -13,7 +13,7 @@ import fr.lp.ic.contact.model.Contact;
  */
 public class ContactDaoImpl implements IContactDao {
 
-	List<Contact> contacts = new ArrayList<Contact>();
+	List<Contact> contacts = new ArrayList<>();
 
 	public List<Contact> findAll() {
 		return contacts.stream()//

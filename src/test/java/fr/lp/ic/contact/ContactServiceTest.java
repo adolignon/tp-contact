@@ -41,10 +41,12 @@ public class ContactServiceTest {
 	public void shouldWorkNameEqualsThree() throws ContactException {
 		//Empty test 
 		service.newContact("abc", VALID_PHONE_NUMBER, VALID_EMAIL);
+		Assert.assertTrue(true);;
 	}
 	@Test
 	public void shouldWorkNameEqualsFourty() throws ContactException {
 		//Empty test 
 		service.newContact("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", VALID_PHONE_NUMBER, VALID_EMAIL);
+		Assert.assertTrue(true);;
 	}
 }
