@@ -9,6 +9,6 @@ public class BaseTest {
 	@Test
 	public void shouldTestEmpty() {
 		//Empty test 
-		Assert.fail("First empty test");
+	
 	}
 }

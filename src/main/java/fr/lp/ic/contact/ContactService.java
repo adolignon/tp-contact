@@ -15,7 +15,7 @@ import fr.lp.ic.contact.model.Contact;
  *
  */
 public class ContactService {
-	
+
 	private static final int MIN_NAME_CHARS = 3;
 	private static final int MAX_NAME_CHARS = 40;
 
@@ -87,11 +87,11 @@ public class ContactService {
 		Optional<Contact> contactFound = contactDao.findByName(name);
 		if(!contactFound.isPresent())
 			throw new ContactNotFoundException();
-		
+
 		if(!newName.equalsIgnoreCase(name) && contactDao.findByName(newName).isPresent()){
-				throw new ContactException();
+			throw new ContactException();
 		}
-		
+
 		contactFound.get().setName(newName);
 		contactFound.get().setPhone(phoneNumber);
 		contactFound.get().setEmail(email);
